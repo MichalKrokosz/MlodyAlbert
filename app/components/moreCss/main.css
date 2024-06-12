@@ -1,0 +1,29 @@
+body {
+    background-image: url("../../images/bg-icons.png");
+    background-attachment: fixed;
+}
+
+.text-shadow {
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.8);
+}
+
+.chooseCard{
+    height: 6.2em;
+    display:block;
+    text-decoration: none;
+}
+
+.chooseCard.disabled{
+    filter: grayscale(1);
+}
+
+.cosik{
+    color: white;
+    border-radius: 16px;
+    padding-bottom: 24px;
+    text-align: center;
+}
+
+.disablePointer{
+    cursor: not-allowed;
+}

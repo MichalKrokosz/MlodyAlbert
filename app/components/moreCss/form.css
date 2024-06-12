@@ -1,0 +1,112 @@
+input:not([type='checkbox']) {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: calc(3em + 2px) !important;
+    margin: 0.5em 0 1em !important;
+    padding: 6px !important;
+    border: 2px solid white;
+    border-radius: 6px !important;
+    background: rgb(0,120,237) !important;
+    color: white !important;
+    font-size: 16px !important;
+    resize: none !important;
+    outline: none !important;
+    
+  }
+  input:focus:not([type='checkbox']) {
+    border-color: white !important;
+  }
+  input:focus:not([type='checkbox']) + label[placeholder]:before, input:not([value=""]) + label[placeholder]:before {
+    color: white !important;
+  }
+  input:focus + label[placeholder]:before , input:not([value=""]) + label[placeholder]:before{
+    transition-duration: 0.3s !important;
+    transform: translate(0.2em, -1.6em) !important;	
+  }
+  
+  input + label[placeholder] {
+    display: block !important;	
+    pointer-events: none !important;
+    line-height: 1.25em !important;
+    margin-top: calc(-3em - 2px) !important;
+    margin-bottom: 0.6em !important;
+  }
+  input + label[placeholder]:before {
+    content: attr(placeholder) !important;
+    display: inline-block !important;
+    margin: 0 calc(0.5em + 2px) !important;
+    padding: 0 2px !important;
+    color: rgba(255,255,255, 0.7) !important;
+    white-space: nowrap !important;
+    transition: 0.3s ease-in-out !important;
+    background-image: linear-gradient(to bottom, rgb(0,120,237), rgb(0,120,237)) !important;
+    background-size: 100% 5px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+
+  
+  select{
+      box-sizing: border-box !important;
+      width: 100% !important;
+      height: calc(3em + 2px) !important;
+      margin: 0 0 1em !important;
+      padding: 6px !important;
+      border: 2px solid white !important;
+      border-radius: 6px !important;
+      background: rgb(0,120,237) !important;
+      color: white !important;
+      font-size: 16px !important;
+      resize: none !important;
+      outline: none !important;
+  }
+  
+  .input-container p {
+      margin: 0;
+      margin-bottom: 2px;
+  }
+  
+  .invalid {
+      border-color: red !important ;
+  }
+  
+  .invalid-checkbox {
+    color: red;
+  }
+
+  .input-container{
+    background-color: rgba(0,120,237,1);
+    padding:10px;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 1px 10px rgb(0,120,237);
+    border-radius:1em  !important;
+    height: 100%;
+}
+
+.icon-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal .shadow {
+    padding-bottom: 12px;
+}
+
+.icon-overlay {
+    position: relative;
+    display: inline-block;
+}
+.icon-overlay .bi {
+    color: white; 
+    font-size: 72px;
+}
+.icon-overlay .bi:nth-child(2) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(0,120,237);  
+    font-size: 48px;
+}
