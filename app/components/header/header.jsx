@@ -2,8 +2,6 @@ import { BsFillTelephoneFill, BsFacebook, BsInstagram } from "react-icons/bs";
 import "./header.css";
 import Image from "next/image";
 import Link from 'next/link';
-import logoEmpty from '../../images/logo-empty.png';
-
 const iconStyle = { color: "white", fontSize: "16px"}
 
 export default function Header(){
@@ -24,7 +22,7 @@ export default function Header(){
                             className="header-img" 
                             width="250"
                             height="250"
-                            src={logoEmpty} 
+                            src={"/images/logo-empty.png"} 
                             alt="Logo"/>
                     </Link>
                 </div>

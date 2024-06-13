@@ -3,6 +3,7 @@ import "./globals.css";
 import "./components/moreCss/main.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from "./components/header/header";
+<link rel="icon" href="/images/favicon.ico" sizes="any" />
 
 const inter = Inter({ subsets: ["latin"] });
 
