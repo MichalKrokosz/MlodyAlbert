@@ -12,26 +12,37 @@ const description = [
     {text: "Pierwsze zajęcia indywidualne rozpoczną się w tym roku w poniedziałek 11 września."}
 ]
 const subject = [
-    {val:"wszystkie", write: "wszystkie przedmioty"},
+    {val: "all", write: "wszystkie przedmioty"},
     {val:"polski", write: "Język polski"},
     {val:"angielski", write: "Język angielski"},
     {val:"matematyka", write: "Matematyka"}
 ]
 const level = [
-    {val:"wszystkie", write: "wszystkie egzaminy"},
+    {val: "all", write: "wszystkie egzaminy"},
     {val:"8", write: "egzamin ósmoklasisty"},
     {val:"m", write: "egzamin maturalny"}
+]
+
+const mode = [
+    {val: "all", write: "wszystkie tryby zajęć"},
+    {val:"stacjonarne", write: "zajęcia stacjonarne"},
+    {val:"online", write: "zajęcia online"}
 ]
 
 
 export default function ZapisyGroups(){
 
     const [clickedGroup, setClickedGroup] = useState("");
-    const [data, setData] = useState(null)
-    const [isLoading, setLoading] = useState(true)
+    const [data, setData] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+
+    const [sortSubject, setSortSubject] = useState("all");
+    const [sortLevel, setSortLevel] = useState("all");
+    const [sortMode, setSortMode] = useState("all");
+    
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/groups')
+        fetch('https://host166766.xce.pl/api/groups.php')
           .then((res) => res.json())
           .then((data) => {
             setData(data)
@@ -41,24 +52,34 @@ export default function ZapisyGroups(){
      
       if (isLoading) return <p>Loading...</p>
       if (!data) return <p>No profile data</p>
+
+
+      const filteredData = data
+        .filter(group => sortSubject === "all" || group.subject === sortSubject)
+        .filter(group => sortLevel === "all" || group.level === sortLevel)
+        .filter(group => sortMode === "all" || group.mode === sortMode);
     return(
         <>
         <Content title="Siema title" desc={description}>
             <h2 className="text-center">--- Wybierz grupę do swoich potrzeb ---</h2>
             <div className="row">
-                <div className="col-6">
-                    <Dropdown options={subject} name="subject"/>
+                <div className="col-4">
+                    <Dropdown options={subject} name="subject" setState={setSortSubject}/>
                 </div>
-                <div className="col-6">
-                    <Dropdown options={level} name="level"/>
+                <div className="col-4">
+                    <Dropdown options={level} name="level" setState={setSortLevel}/>
+                </div>
+                <div className="col-4">
+                    <Dropdown options={mode} name="mode" setState={setSortMode}/>
                 </div>
             </div>
             <div className="row">
-                {data.map( (group, index) => <CardGroups key={index} group={group} setClickedGroup={setClickedGroup} />)}
+                {filteredData.map((group, index) => (
+                    <CardGroups key={index} group={group} setClickedGroup={setClickedGroup} />
+                ))}
             </div>
         </Content>
         <FormGroups clickedGroup={clickedGroup}/>
-        
         </>
     )
 

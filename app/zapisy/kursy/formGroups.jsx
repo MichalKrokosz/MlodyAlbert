@@ -77,8 +77,8 @@ export default function FormGroups({clickedGroup}){
         }),
         onSubmit: values => {
             values.group = clickedGroup;
-            console.log(JSON.stringify(values, null, 2));
-            fetch('http://localhost:8080/email/group', {
+            //console.log(JSON.stringify(values, null, 2));
+            fetch('https://host166766.xce.pl/email/group.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ export default function FormGroups({clickedGroup}){
 
                                 {/* regulamin */}
                                 <input className="form-check-input" type="checkbox" id="statute" name='statute' autocomplete="nope" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.statute}></input>
-                                <label className="form-check-label" for="check" id="check-label">
+                                <label className="form-check-label" htmlFor="check" id="check-label">
                                 &nbsp;Zapoznałem się z&nbsp;<a href="regulamin.pdf" target="_blank" style={{color : "white"}}>regulaminem</a>
                                 </label>
                                 {formik.touched.statute && formik.errors.statute ? ( <div className='inputError'>{formik.errors.statute}</div> ) : <br/>}

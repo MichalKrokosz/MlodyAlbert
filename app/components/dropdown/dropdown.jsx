@@ -1,10 +1,19 @@
-import { TemplateContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import React from 'react';
 
+export default function Dropdown({ name, options, setState }) {
 
-export default function Dropdown(props){
-    return(
-        <select className="form-select form-select-lg" name={props.name} id={props.name}>
-            {props.options.map((item, i) => <option key={i} value={item.val}>{item.write}</option>)}
+    return (
+        <select
+            className="form-select form-select-lg"
+            name={name}
+            id={name}
+            onChange={setState ? (e) => setState(e.target.value) : null}
+        >
+            {options.map((item, i) => (
+                <option key={i} value={item.val}>
+                    {item.write}
+                </option>
+            ))}
         </select>
-    )
+    );
 }

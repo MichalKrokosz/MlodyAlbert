@@ -1,19 +1,36 @@
 import Image from "next/image";
 import ReadMore from "../../components/readMore/readMore"
+import "./card.css"
 
 
 export default function CardKursy({group, setClickedGroup}){
     
-    var writeSubject = "Błąd";
-    if(group.subject == "polski"){
-        writeSubject = "Język polski";
+    var writeSubject = "error";
+    switch (group.subject) {
+        case 'polski':
+            writeSubject = "Język polski";
+            break;
+        case 'angielski':
+            writeSubject = "Język angielski";
+            break;
+        default:
+            writeSubject = group.subject.charAt(0).toUpperCase() + group.subject.slice(1);
     }
-    else if(group.subject == "angielski"){
-        writeSubject = "Język angielski";
+
+    var writeLevel = "error";
+    switch (group.level) {
+        case '8':
+            writeLevel = "egz. 8klasisty";
+            break;
+        case 'm':
+            writeLevel = "egz. maturalny";
+            break;
+        default:
+            writeLevel = group.subject.charAt(0).toUpperCase() + group.subject.slice(1);
     }
-    else {
-        writeSubject = group.subject.toUpperCase();
-    }
+
+    
+
     
     return(
         <>
@@ -25,7 +42,7 @@ export default function CardKursy({group, setClickedGroup}){
                     </div>
                     <div className='col-sm'>
                         <p className='card-name'>{group.writeName}</p>
-                        <p className='badge-container'><span className={`"badge badge-${group.subject}"`}></span> <span className={`"badge badge-${group.mode}"`}>{group.mode}</span> <span className={`"badge badge-${group.level}"`}>{group.level}</span></p>
+                        <p className='badge-container'><span className={`badge badge-${group.subject}`}>{writeSubject}</span> <span className={`badge badge-${group.mode}`}>{group.mode}</span> <span className={`badge badge-${group.level}`}>{writeLevel}</span></p>
                         <p><b>{group.time}</b></p>
                         <ReadMore text={group.description}/>
                     </div>
