@@ -37,7 +37,7 @@ export default function Header(){
                             <Link href="/zapisy">Zapisy</Link>
                         </li>
                         <li>
-                            <Link href="/zapisy">Cennik</Link>
+                            <Link href="/cennik">Cennik</Link>
                         </li>
                         <li>
                             <Link href="/kontakt">Kontakt</Link>
