@@ -40,7 +40,7 @@ export default function Header(){
                             <Link href="/zapisy">Cennik</Link>
                         </li>
                         <li>
-                            <Link href="/zapisy">Kontakt</Link>
+                            <Link href="/kontakt">Kontakt</Link>
                         </li>
                     </ul>
                 </nav>
