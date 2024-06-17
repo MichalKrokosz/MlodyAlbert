@@ -11,6 +11,8 @@ import {BsCircleFill, BsPersonFill, BsPersonArmsUp} from 'react-icons/bs'
 
 export default function FormGroups({clickedGroup}){
     
+    var a = "cos";
+
     let actualYear = new Date().getFullYear();
     const recommendationOptions = [
         {val:"nic", write: "Przez co dowiedziałes sie o Młodym Albercie?"},
@@ -24,6 +26,8 @@ export default function FormGroups({clickedGroup}){
           ? require("bootstrap/dist/js/bootstrap")
           : null;
         },[]);
+
+    
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
     const formik = useFormik({
@@ -88,14 +92,17 @@ export default function FormGroups({clickedGroup}){
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
+                a = "siema"
             })
             .catch((error) => {
                 console.error('Error:', error);
+                a = "nara"
             });
                 },
     });
 
     return (
+        <>
         <div className="modal fade modal-dialog-scrollable" id="modal-form" tabindex="-1" aria-hidden="true">
             <div className="modal-dialog modal-xl modal-fullscreen-sm-down">
                 <div className="modal-content">
@@ -200,13 +207,26 @@ export default function FormGroups({clickedGroup}){
                             
                         </div>
                         <div className="modal-footer">
-                            <button type="submit" className="btn btn-primary" disabled={!(formik.isValid && formik.dirty)}>Save changes</button>
+                            <button type="submit" className="btn btn-primary" data-bs-target="#modal-confirmation" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(formik.isValid && formik.dirty)}>Save changes</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
+        <div class="modal fade" id="modal-confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{a}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </>
 
     )
 }

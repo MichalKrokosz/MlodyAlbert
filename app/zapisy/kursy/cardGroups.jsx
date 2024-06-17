@@ -37,10 +37,10 @@ export default function CardKursy({group, setClickedGroup}){
         <div className='col-lg-6 tutorcard'>
             <div className='card'>
                 <div className='row'>
-                    <div className='col-sm-auto'>
+                    <div className='col-md-auto'>
                         <a target='_blank' href={`/imagesGroups/${group.name}.jpg`}><Image src={`/imagesGroups/${group.name}.jpg`} width="250" height="250" className='rezerw-img'/></a>
                     </div>
-                    <div className='col-sm'>
+                    <div className='col-md'>
                         <p className='card-name'>{group.writeName}</p>
                         <p className='badge-container'><span className={`badge badge-${group.subject}`}>{writeSubject}</span> <span className={`badge badge-${group.mode}`}>{group.mode}</span> <span className={`badge badge-${group.level}`}>{writeLevel}</span></p>
                         <p><b>{group.time}</b></p>

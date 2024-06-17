@@ -8,9 +8,10 @@ export default function Header(){
     return(
         <header className="container-fluid my-0">
             <div style={{textAlign: "right", color: "white"}}>
-                <BsFillTelephoneFill style={iconStyle}/> <span style={iconStyle}>609 979 345 &nbsp;&nbsp;</span>
-                <BsFacebook style={iconStyle} />&nbsp;&nbsp;
-                <BsInstagram style={iconStyle} />
+                <a href="tel:+48609979345" style={{textDecoration: "none"}}><BsFillTelephoneFill style={iconStyle}/> <span style={iconStyle}>609 979 345 &nbsp;&nbsp;</span></a>
+                <a href="https://www.facebook.com/mlody.albert" target="_blank"><BsFacebook style={iconStyle} /></a>&nbsp;&nbsp;
+                <a href="https://www.instagram.com/mlodyalbert" target="_blank"><BsInstagram style={iconStyle} /></a>
+                
             </div>
             <div className="row">
                 <div className="col-6 header-text">

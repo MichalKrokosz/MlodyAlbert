@@ -16,7 +16,7 @@ function ContactCard({ icon: Icon, textBig, textSmall}){
 
 export default function Contact(){
     return (
-        <Content>
+        <Content title="Kontakt" desc={[{text: "Gdzie prowadzimy nasze zajęcia?"}]}>
             <div className="row">
                 <div className="col-lg-4" style={{paddingLeft: "22px", paddingTop: "8px"}}>
                     <ContactCard icon={BsPhone} textBig={"Telefon"} textSmall={"+48 609 979 345"}/>
