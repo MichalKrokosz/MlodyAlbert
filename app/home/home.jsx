@@ -9,7 +9,7 @@ const description = [
 
 export default function Home(){
     return(
-        <Content title={"Strona główna"} desc={description}>
+        <Content title={"Strona głównaaaaaaaa"} desc={description}>
 
         </Content>
     )
