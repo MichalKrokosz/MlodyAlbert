@@ -5,7 +5,7 @@ const description = [
     {text: "Podane ceny dotyczą uczestnictwa w zajęciach jednego dziecka z jednego przedmiotu. Podane ceny w trakcie roku szkolnego mogą ulec zmianie."},
 ]
 const imageStyle = {
-    width: "75%",
+    width: "70%",
     height: "auto",
     border: "3px solid white",
     borderRadius: "32px",

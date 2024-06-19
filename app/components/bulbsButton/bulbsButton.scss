@@ -1,10 +1,10 @@
 
 
-$main: #0078ed;
+$main: rgb(0, 97, 192);
 $gray: #555;
 $dark: #FFFFFF;
 $borderW: 2px;
-$rad: 16px;
+$rad: 18px;
 
 
 
@@ -97,11 +97,11 @@ $rad: 16px;
         height: 100%;
         background: $main;
         border-radius: 100%;
-        transform: translate3d(0,150%,0) scale(1.7);
+        transform: translate3d(0,150%,0) scale(1.8);
         transition: transform 0.45s;
         
         @supports(filter: url('#goo')) {
-        transform: translate3d(0,150%,0) scale(1.4);
+        transform: translate3d(0,150%,0) scale(1.5);
         }
         
         @for $i from 1 through $numOfBlobs {
@@ -112,10 +112,10 @@ $rad: 16px;
         }
         
         .blob-btn:hover & {
-            transform: translateZ(0) scale(1.7);
+            transform: translateZ(0) scale(1.8);
             
             @supports(filter: url('#goo')) {
-                transform: translateZ(0) scale(1.4);
+                transform: translateZ(0) scale(1.5);
             }
         }
     }

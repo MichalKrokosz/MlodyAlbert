@@ -113,8 +113,8 @@ export default function FormGroups({clickedGroup}){
                     <form onSubmit={formik.handleSubmit}>
                         <div className="modal-body">
 
-                            <div className='row' style={{marginBottom: "1.6em"}}>
-                                <div className='col-md-6'>
+                            <div className='row'>
+                                <div className='col-md-6' style={{marginBottom: "1.6em"}}>
                                     <div className='input-container'>
                                         <div class="icon-container">
                                             <div class="icon-overlay">
@@ -139,7 +139,7 @@ export default function FormGroups({clickedGroup}){
                                         {formik.touched.tel && formik.errors.tel ? ( <div className='inputError'>{formik.errors.tel}</div> ) : <br/>}
                                     </div>
                                 </div>
-                                <div className='col-md-6'>
+                                <div className='col-md-6' style={{marginBottom: "1.6em"}}>
                                     <div className='input-container'>
                                         <div class="icon-container">
                                             <div class="icon-overlay">
@@ -182,27 +182,30 @@ export default function FormGroups({clickedGroup}){
                                         </div>
                                     </div>  
                                 </div>
+                                <div className='col-12'>
+                                    <div className='input-container'>
+                                        {/* email */}
+                                        <input id="email" name="email" type="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
+                                        <label htmlFor="email" placeholder="Email"></label>
+                                        {formik.touched.email && formik.errors.email ? ( <div className='inputError'>{formik.errors.email}</div> ) : <br/>}
+
+                                        {/* polecajka */}
+                                        <select className="form-select form-select-lg" name="recommendation" id="recommendation"  onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.recommendation} >
+                                            {recommendationOptions.map((item, i) => <option key={i} value={item.val}>{item.write}</option>)}
+                                        </select>
+                                        {formik.touched.recommendation && formik.errors.recommendation ? ( <div className='inputError'>{formik.errors.recommendation}</div> ) : <br/>}
+
+                                        {/* regulamin */}
+                                        <input className="form-check-input" type="checkbox" id="statute" name='statute' autocomplete="nope" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.statute}></input>
+                                        <label className="form-check-label" htmlFor="check" id="check-label">
+                                        &nbsp;Zapoznałem się z&nbsp;<a href="regulamin.pdf" target="_blank" style={{color : "white"}}>regulaminem</a>
+                                        </label>
+                                        {formik.touched.statute && formik.errors.statute ? ( <div className='inputError'>{formik.errors.statute}</div> ) : <br/>}
+
+                                    </div>
+                                </div>
                             </div>
-                            <div className='input-container'>
-                                {/* email */}
-                                <input id="email" name="email" type="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
-                                <label htmlFor="email" placeholder="Email"></label>
-                                {formik.touched.email && formik.errors.email ? ( <div className='inputError'>{formik.errors.email}</div> ) : <br/>}
-
-                                {/* polecajka */}
-                                <select className="form-select form-select-lg" name="recommendation" id="recommendation"  onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.recommendation} >
-                                    {recommendationOptions.map((item, i) => <option key={i} value={item.val}>{item.write}</option>)}
-                                </select>
-                                {formik.touched.recommendation && formik.errors.recommendation ? ( <div className='inputError'>{formik.errors.recommendation}</div> ) : <br/>}
-
-                                {/* regulamin */}
-                                <input className="form-check-input" type="checkbox" id="statute" name='statute' autocomplete="nope" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.statute}></input>
-                                <label className="form-check-label" htmlFor="check" id="check-label">
-                                &nbsp;Zapoznałem się z&nbsp;<a href="regulamin.pdf" target="_blank" style={{color : "white"}}>regulaminem</a>
-                                </label>
-                                {formik.touched.statute && formik.errors.statute ? ( <div className='inputError'>{formik.errors.statute}</div> ) : <br/>}
-
-                            </div>
+                            
                             
                             
                         </div>

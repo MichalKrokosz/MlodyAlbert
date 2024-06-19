@@ -60,16 +60,16 @@ export default function ZapisyGroups(){
         .filter(group => sortMode === "all" || group.mode === sortMode);
     return(
         <>
-        <Content title="Siema title" desc={description}>
-            <h2 className="text-center">--- Wybierz grupę do swoich potrzeb ---</h2>
+        <Content title="Zajęcia grupowe" desc={description}>
+            <h2 className="text-center">Wybierz grupę do swoich potrzeb</h2>
             <div className="row">
-                <div className="col-4">
+                <div className="col-md-4">
                     <Dropdown options={subject} name="subject" setState={setSortSubject}/>
                 </div>
-                <div className="col-4">
+                <div className="col-md-4">
                     <Dropdown options={level} name="level" setState={setSortLevel}/>
                 </div>
-                <div className="col-4">
+                <div className="col-md-4">
                     <Dropdown options={mode} name="mode" setState={setSortMode}/>
                 </div>
             </div>

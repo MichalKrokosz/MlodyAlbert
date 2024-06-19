@@ -1,9 +1,29 @@
+
+import {useState} from "react"
+import "./readMore.css"
+
 export default function ReadMore(props){
-    var textSegments = props.text.split("@")
+
+    const [readMore, setReadMore] = useState(false);
+
+    var textSegments = props.text.split("@");
     return (
         <div style={{paddingBottom: "2em"}}>
-            {textSegments.map((segm, i) => <p key={i}>{segm}</p>)}
-        </div>
+        {readMore === false ? (
+          <>
+            <p>{textSegments[0]}</p>
+            <a className="btn-readMore" onClick={() => setReadMore(true)}>Czytaj więcej</a>
+          </>
+        ) : (
+          <>
+            {textSegments.map((segm, i) => (
+              <p key={i}>{segm}</p>
+            ))}
+            <a className="btn-readMore" onClick={() => setReadMore(false)}>Zwiń</a>
+          </>
+        )}
+      </div>
         
     )
 }
+///{textSegments.map((segm, i) => <p key={i}>{segm}</p>)}
