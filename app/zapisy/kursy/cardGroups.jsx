@@ -38,7 +38,7 @@ export default function CardKursy({group, setClickedGroup}){
             <div className='card'>
                 <div className='row'>
                     <div className='col-md-auto'>
-                        <a target='_blank' href={`/imagesGroups/${group.name}.jpg`}><Image src={`/imagesGroups/${group.name}.jpg`} width="250" height="250" className='rezerw-img'/></a>
+                        <a target='_blank' href={`/images/imagesGroups/${group.name}.jpg`}><Image src={`/images/imagesGroups/${group.name}.jpg`} width="250" height="250" className=''/>{group.name}</a>
                     </div>
                     <div className='col-md'>
                         <p className='card-name'>{group.writeName}</p>
