@@ -110,3 +110,8 @@ input:not([type='checkbox']) {
     color: rgb(0,120,237);  
     font-size: 48px;
 }
+.confirmation-panel{
+  padding: 16px;
+  text-align: center;
+}
+ 

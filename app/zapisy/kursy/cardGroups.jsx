@@ -38,7 +38,7 @@ export default function CardKursy({group, setClickedGroup}){
             <div className='card'>
                 <div className='row'>
                     <div className='col-md-auto'>
-                        <a target='_blank' href={`/images/imagesGroups/${group.name}.jpg`}><Image src={`/images/imagesGroups/${group.name}.jpg`} width="250" height="250" className=''/>{group.name}</a>
+                        <a target='_blank' href={`/images/imagesGroups/${group.name}.jpg`}><Image src={`/images/imagesGroups/${group.name}.jpg`} width="250" height="250" className='rezerw-img'/></a>
                     </div>
                     <div className='col-md'>
                         <p className='card-name'>{group.writeName}</p>
@@ -47,7 +47,18 @@ export default function CardKursy({group, setClickedGroup}){
                         <ReadMore text={group.description}/>
                     </div>
                 </div>
-                <button type='button' className='btn btn-primary rezerw-button' data-bs-toggle='modal' data-bs-target='#modal-form' onClick={() => setClickedGroup(group.writeName)} >Zarezerwuj teraz!</button>
+
+                {
+                    (group.access === "1" ?
+                        <button type='button' className="btn btn-primary rezerw-button" data-bs-toggle='modal' data-bs-target='#modal-form' onClick={() => setClickedGroup(group.writeName)} >Zarezerwuj teraz!</button>:
+                        <button className="btn btn-primary rezerw-button disable" disabled>Zapisy niedostępne</button>
+
+                    )
+
+
+                }
+
+                
             </div>
         </div>
         </>

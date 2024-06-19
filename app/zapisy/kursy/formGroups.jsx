@@ -2,16 +2,29 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 import "../../components/moreCss/form.css"
 import Dropdown from '../../components/dropdown/dropdown'
-import {BsCircleFill, BsPersonFill, BsPersonArmsUp} from 'react-icons/bs'
+import {BsCircleFill, BsPersonFill, BsPersonArmsUp, BsCheck2Circle, BsDashCircle} from 'react-icons/bs'
 
+
+function ConfirmationPanel({ icon: Icon, textBig, textSmall }) {
+    return (
+        <div className="confirmation-panel">
+            <Icon style={{ color: Icon === BsCheck2Circle ? "green" : "red" , fontSize: "42px"}} />
+            <h3>{textBig}</h3>
+            <p>{textSmall}</p>
+        </div>
+    );
+}
 
 
 export default function FormGroups({clickedGroup}){
     
-    var a = "cos";
+
+    const [sendSuccess, setSendSuccess] = useState(false);
+    const [isSending, setIsSending] = useState(false); 
+    
 
     let actualYear = new Date().getFullYear();
     const recommendationOptions = [
@@ -42,23 +55,24 @@ export default function FormGroups({clickedGroup}){
             birthYear: '',
             email: '',
             recommendation: '',
+            recommendationName: '',
             statute: false,
         },
         validationSchema: Yup.object({
             parentFirstName: Yup.string()
-                .max(15, 'Must be 15 characters or less')
+                .max(15, 'Maksymalnie 15 znaków')
                 .required('Wymagane'),
             parentLastName: Yup.string()
-                .max(20, 'Must be 20 characters or less')
+                .max(25, 'Maksymalnie 25 znaków')
                 .required('Wymagane'),
             tel: Yup.string()
                 .matches(phoneRegExp, 'Niepoprawny numer telefonu')
                 .required('Wymagane'),
             childFirstName: Yup.string()
-                .max(15, 'Must be 15 characters or less')
+                .max(15, 'Maksymalnie 15 znaków')
                 .required('Wymagane'),
             childLastName: Yup.string()
-                .max(20, 'Must be 20 characters or less')
+                .max(25, 'Maksymalnie 25 znaków')
                 .required('Wymagane'),
             birthDay: Yup.number()
                 .min(1, 'Dzień musi być prawidłowy')
@@ -72,8 +86,8 @@ export default function FormGroups({clickedGroup}){
                 .min(Number(actualYear)-30, 'Rok musi być prawidłowy')
                 .max(Number(actualYear)-5, 'Rok musi być prawidłowy')
                 .required('Wymagane'),
-            recommendation: Yup.string()
-                .notOneOf(["nic"], "Wolimy aby było wypełnione dla naszych statystyk"),
+            recommendationName: Yup.string()
+                .max(50, 'Maksymalnie 50 znaków'),
             email: Yup.string()
                 .required('Wymagane'),
             statute: Yup.bool()
@@ -81,6 +95,8 @@ export default function FormGroups({clickedGroup}){
         }),
         onSubmit: values => {
             values.group = clickedGroup;
+            setSendSuccess(false);
+            setIsSending(true);
             //console.log(JSON.stringify(values, null, 2));
             fetch('https://host166766.xce.pl/email/group.php', {
                 method: 'POST',
@@ -92,11 +108,13 @@ export default function FormGroups({clickedGroup}){
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                a = "siema"
+                setIsSending(false);
+                setSendSuccess(true);
             })
             .catch((error) => {
                 console.error('Error:', error);
-                a = "nara"
+                setIsSending(false);
+                setSendSuccess(false);
             });
                 },
     });
@@ -193,7 +211,13 @@ export default function FormGroups({clickedGroup}){
                                         <select className="form-select form-select-lg" name="recommendation" id="recommendation"  onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.recommendation} >
                                             {recommendationOptions.map((item, i) => <option key={i} value={item.val}>{item.write}</option>)}
                                         </select>
-                                        {formik.touched.recommendation && formik.errors.recommendation ? ( <div className='inputError'>{formik.errors.recommendation}</div> ) : <br/>}
+
+                                        {/* polecajka nazwa */}
+                                        <div style={(formik.values.recommendation === "Przez znajomego") ? {} : {display: "none"}}>
+                                            <input id="recommendationName" name="recommendationName" type="text" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.recommendationName} />
+                                            <label htmlFor="recommendationName" placeholder="Imię i nazwisko osoby polecającej"></label>
+                                            {formik.touched.recommendationName && formik.errors.recommendationName ? ( <div className='inputError'>{formik.errors.recommendationName}</div> ) : <br/>}
+                                        </div>
 
                                         {/* regulamin */}
                                         <input className="form-check-input" type="checkbox" id="statute" name='statute' autocomplete="nope" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.statute}></input>
@@ -220,11 +244,28 @@ export default function FormGroups({clickedGroup}){
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>{a}</p>
+                    {
+                        (isSending ? 
+                            <p>Wysyłanie...</p>:
+                            (sendSuccess ?
+                                <ConfirmationPanel 
+                                    icon={BsCheck2Circle} 
+                                    textBig={"Wysłano pomyślnie"} 
+                                    textSmall={"Potwierdzenie rezerwacji wysłaliśmy na podany email i będziemy się kontaktować na podany numer telefonu w celu potwierdzenia rezerwacji"}
+                                /> :
+                                <ConfirmationPanel 
+                                    icon={BsDashCircle} 
+                                    textBig={"Wystąpił błąd"} 
+                                    textSmall={"W celu wyjaśnienia sytuacji i zarezerwowania prosimy skontaktować się telefonicznie lub emailem albo spróbować ponownie"}
+                                />
+
+                            )
+                        )
+                    }
                     </div>
                 </div>
             </div>

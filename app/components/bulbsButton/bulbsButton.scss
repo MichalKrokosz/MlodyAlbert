@@ -61,6 +61,7 @@ $rad: 18px;
     &:hover {
         color: $dark;
         border-radius:16px;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
         
         &:after {
         transition: all 0.3s;

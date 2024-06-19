@@ -7,17 +7,17 @@ export default function Zapisy(){
         <Content>
             <h1 className="cosik">Która oferta cię interesuje?</h1>
             <div className="row">
-                <div className="col-sm-4">
+                <div className="col-sm-4" style={{paddingBottom: "24px"}}>
                     <div className="chooseCard disabled">
                         <BulbsButton title={"Zajęcia indywidualne"} text={"Niedostępne"}/>
                     </div>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-sm-4" style={{paddingBottom: "24px"}}>
                     <Link className="chooseCard" href={"/zapisy/kursy"}>
                         <BulbsButton title={"Zajęcia grupowe"}/>
                     </Link>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-sm-4" style={{paddingBottom: "24px"}}>
                     <div className="chooseCard disabled">
                         <BulbsButton title={"Egzaminy próbne"} text={"Niedostępne"}/>
                     </div>

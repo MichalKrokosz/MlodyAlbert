@@ -45,8 +45,8 @@ export default function ZapisyGroups(){
         fetch('https://host166766.xce.pl/api/groups.php')
           .then((res) => res.json())
           .then((data) => {
-            setData(data)
-            setLoading(false)
+            setData(data.filter(group => group.visibility == "1"));
+            setLoading(false);
           })
       }, [])
      
