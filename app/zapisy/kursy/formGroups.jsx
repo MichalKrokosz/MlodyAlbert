@@ -2,10 +2,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useEffect, useState} from 'react';
+import { useEffect, useState, useReducer} from 'react';
 import "../../components/moreCss/form.css"
 import Dropdown from '../../components/dropdown/dropdown'
-import {BsCircleFill, BsPersonFill, BsPersonArmsUp, BsCheck2Circle, BsDashCircle} from 'react-icons/bs'
+import {BsCircleFill, BsPersonFill, BsPersonArmsUp, BsCheck2Circle, BsDashCircle, BsArrowUpCircle} from 'react-icons/bs'
 
 
 function ConfirmationPanel({ icon: Icon, textBig, textSmall }) {
@@ -19,12 +19,29 @@ function ConfirmationPanel({ icon: Icon, textBig, textSmall }) {
 }
 
 
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "SUCCESS":
+            return {icon: BsCheck2Circle, textBig: "Wysłano pomyślnie", textSmall: "Potwierdzenie rezerwacji wysłaliśmy na podany email i będziemy się kontaktować na podany numer telefonu w celu potwierdzenia rezerwacji"}
+        case "FAILURE":
+            return {icon: BsDashCircle, textBig: "Wystąpił błąd", textSmall: "W celu wyjaśnienia sytuacji i zarezerwowania prosimy skontaktować się telefonicznie lub emailem albo spróbować ponownie"}
+        case "SENDING":
+            return {icon: BsArrowUpCircle, textBig: "Wysyłanie", textSmall: ""}
+        default:
+            return state;
+    }
+  };
+
+
 export default function FormGroups({clickedGroup}){
     
 
-    const [sendSuccess, setSendSuccess] = useState(false);
-    const [isSending, setIsSending] = useState(false); 
+    //const [sendSuccess, setSendSuccess] = useState(false);
+    //const [isSending, setIsSending] = useState(false); 
     
+    const [sendState, dispatch] = useReducer(reducer, {icon: BsArrowUpCircle, textBig: "Wysyłanie", textSmall: ""});
+
 
     let actualYear = new Date().getFullYear();
     const recommendationOptions = [
@@ -35,10 +52,10 @@ export default function FormGroups({clickedGroup}){
     ]
     
     useEffect(() => {
-        typeof document !== undefined
-          ? require("bootstrap/dist/js/bootstrap")
-          : null;
-        },[]);
+    typeof document !== undefined
+        ? require("bootstrap/dist/js/bootstrap")
+        : null;
+    },[]);
 
     
 
@@ -95,8 +112,7 @@ export default function FormGroups({clickedGroup}){
         }),
         onSubmit: values => {
             values.group = clickedGroup;
-            setSendSuccess(false);
-            setIsSending(true);
+            dispatch({ type: "SENDING" })
             //console.log(JSON.stringify(values, null, 2));
             fetch('https://host166766.xce.pl/email/group.php', {
                 method: 'POST',
@@ -108,13 +124,11 @@ export default function FormGroups({clickedGroup}){
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                setIsSending(false);
-                setSendSuccess(true);
+                dispatch({ type: "SUCCESS" })
             })
             .catch((error) => {
                 console.error('Error:', error);
-                setIsSending(false);
-                setSendSuccess(false);
+                dispatch({ type: "FAILURE" })
             });
                 },
     });
@@ -211,6 +225,8 @@ export default function FormGroups({clickedGroup}){
                                         <select className="form-select form-select-lg" name="recommendation" id="recommendation"  onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.recommendation} >
                                             {recommendationOptions.map((item, i) => <option key={i} value={item.val}>{item.write}</option>)}
                                         </select>
+                                        
+
 
                                         {/* polecajka nazwa */}
                                         <div style={(formik.values.recommendation === "Przez znajomego") ? {} : {display: "none"}}>
@@ -248,24 +264,11 @@ export default function FormGroups({clickedGroup}){
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    {
-                        (isSending ? 
-                            <p>Wysyłanie...</p>:
-                            (sendSuccess ?
-                                <ConfirmationPanel 
-                                    icon={BsCheck2Circle} 
-                                    textBig={"Wysłano pomyślnie"} 
-                                    textSmall={"Potwierdzenie rezerwacji wysłaliśmy na podany email i będziemy się kontaktować na podany numer telefonu w celu potwierdzenia rezerwacji"}
-                                /> :
-                                <ConfirmationPanel 
-                                    icon={BsDashCircle} 
-                                    textBig={"Wystąpił błąd"} 
-                                    textSmall={"W celu wyjaśnienia sytuacji i zarezerwowania prosimy skontaktować się telefonicznie lub emailem albo spróbować ponownie"}
-                                />
-
-                            )
-                        )
-                    }
+                    <ConfirmationPanel 
+                        icon={sendState.icon} 
+                        textBig={sendState.textBig} 
+                        textSmall={sendState.textSmall}
+                    />
                     </div>
                 </div>
             </div>
@@ -277,3 +280,18 @@ export default function FormGroups({clickedGroup}){
 
 
 
+
+
+/*
+<ConfirmationPanel 
+    icon={BsCheck2Circle} 
+    textBig={"Wysłano pomyślnie"} 
+    textSmall={"Potwierdzenie rezerwacji wysłaliśmy na podany email i będziemy się kontaktować na podany numer telefonu w celu potwierdzenia rezerwacji"}
+/>
+
+<ConfirmationPanel 
+    icon={BsDashCircle} 
+    textBig={"Wystąpił błąd"} 
+    textSmall={"W celu wyjaśnienia sytuacji i zarezerwowania prosimy skontaktować się telefonicznie lub emailem albo spróbować ponownie"}
+/>
+*/

@@ -15,10 +15,14 @@ const imageStyle = {
 
 export default function Cennik(){
     return(
-        <Content title="Cennik" desc={description}>
-            <div style={{display: "flex", justifyContent: "center"}}>
+        <Content>
+            <div style={{display: "flex", justifyContent: "center", marginBottom: "32px"}}>
                 <Image src={"/images/cennik.jpg"} width="1654" height="2339" style={imageStyle} alt="Cennik" />
             </div>
+            <div className="whiteCard" style={{width: "70%"}}>
+                Powyższy cennik obowiązuje w roku szkolnym 2024/2025.<br/>Podane ceny dotyczą uczestnictwa jednego ucznia z jednego przedmiotu.<br/>Ceny w ciągu roku szkolnego mogą ulec zmianie o wartość wskaźnika inflacji. 
+            </div>
         </Content>
+
     )
 }

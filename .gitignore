@@ -11,8 +11,8 @@
 
 # next.js
 /.next/
-/out/email/
-/out/api/
+/out/
+
 
 # my
 /public/api/

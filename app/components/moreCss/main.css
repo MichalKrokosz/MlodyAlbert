@@ -34,32 +34,21 @@ body {
    margin-left: 0 !important;
 }
 
+.whiteCard{
+    background-color: white;
+    border-radius: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: black;
+    padding: 24px;
+    box-shadow: white 0px 0px 8px;
+}
+
 
 
 @media only screen and (max-width: 576px) {
-    
-    .header-img{
-        margin: 10px;
-        width: 90%;
-        height: auto;
-    }
-    .header-text{
-        color: white;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        text-align: right;
-    }
-    .header-text p{
-        font-size: 28px;
-    }
-    nav ul li a {
-        padding: 8px;
-        font-size: 16px;
-    }
     .container {
         padding:0px !important;
     }
-
-
 }

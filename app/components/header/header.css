@@ -69,7 +69,48 @@ nav ul li a:hover {
 }
 
 
+@media only screen and (max-width: 576px) {
+    
+    .header-img{
+        margin: 10px;
+        width: 90%;
+        height: auto;
+    }
+    .header-text{
+        color: white;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        text-align: right;
+    }
+    .header-text p{
+        font-size: 28px;
+    }
+    nav ul li a {
+        padding: 8px;
+        font-size: 16px;
+    }
 
+}
+
+@media only screen and (max-width: 392px) {
+    
+    .header-img{
+        margin: 10px;
+        width: 90%;
+        height: auto;
+    }
+    .header-text{
+        color: white;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        text-align: right;
+    }
+    .header-text p{
+        font-size: 22px;
+    }
+}
 
 
 

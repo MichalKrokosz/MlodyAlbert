@@ -5,7 +5,7 @@ import "./card.css"
 
 export default function CardKursy({group, setClickedGroup}){
     
-    var writeSubject = "error";
+    var writeSubject = "";
     switch (group.subject) {
         case 'polski':
             writeSubject = "Język polski";
@@ -17,7 +17,7 @@ export default function CardKursy({group, setClickedGroup}){
             writeSubject = group.subject.charAt(0).toUpperCase() + group.subject.slice(1);
     }
 
-    var writeLevel = "error";
+    var writeLevel = "";
     switch (group.level) {
         case '8':
             writeLevel = "egz. 8klasisty";
@@ -43,7 +43,8 @@ export default function CardKursy({group, setClickedGroup}){
                     <div className='col-md'>
                         <p className='card-name'>{group.writeName}</p>
                         <p className='badge-container'><span className={`badge badge-${group.subject}`}>{writeSubject}</span> <span className={`badge badge-${group.mode}`}>{group.mode}</span> <span className={`badge badge-${group.level}`}>{writeLevel}</span></p>
-                        <p><b>{group.time}</b></p>
+                        <p style={{marginBottom: "0"}}><b>{group.time}</b></p>
+                        <a target="_blank" href={`/harmonogramy/grupy/${group.name}.pdf`}>Harmonogram zajęć</a>
                         <ReadMore text={group.description}/>
                     </div>
                 </div>
@@ -52,10 +53,7 @@ export default function CardKursy({group, setClickedGroup}){
                     (group.access === "1" ?
                         <button type='button' className="btn btn-primary rezerw-button" data-bs-toggle='modal' data-bs-target='#modal-form' onClick={() => setClickedGroup(group.writeName)} >Zarezerwuj teraz!</button>:
                         <button className="btn btn-primary rezerw-button disable" disabled>Zapisy niedostępne</button>
-
                     )
-
-
                 }
 
                 

@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Content from "../../components/content/content"
 import Dropdown from "../../components/dropdown/dropdown"
 import CardGroups from "./cardGroups"
@@ -7,80 +7,83 @@ import FormGroups from "./formGroups"
 import "./card.css"
 
 const description = [
-    {text: "W tej części mamy ogromną przyjemność przedstawić korepetytorów, którzy w roku szkolnym 2023 / 2024 będą prowadzić zajęcia indywidualne. Należy wybrać przedmiot, z którego uczeń potrzebuje pomocy oraz poziom, na którym obecnie się uczy, a system filtrowania pokaże odpowiednich korepetytorów."},
-    {text: "Chociaż plany zajęć korepetytorów są dostępne już pod koniec sierpnia to zapisy zawsze zaczynamy w dniu rozpoczęcia roku szkolnego, tym razem, wyjątkowo, w poniedziałek 4 września."},
-    {text: "Pierwsze zajęcia indywidualne rozpoczną się w tym roku w poniedziałek 11 września."}
-]
-const subject = [
-    {val: "all", write: "wszystkie przedmioty"},
-    {val:"polski", write: "Język polski"},
-    {val:"angielski", write: "Język angielski"},
-    {val:"matematyka", write: "Matematyka"}
-]
-const level = [
-    {val: "all", write: "wszystkie egzaminy"},
-    {val:"8", write: "egzamin ósmoklasisty"},
-    {val:"m", write: "egzamin maturalny"}
-]
+    { text: "Mamy ogromną przyjemność przedstawić Państwu ofertę kursów przygotowujących do egzaminu ósmoklasisty i egzaminu maturalnego." },
+    { text: "Wszystkie kursy obejmują 30 spotkań po 90 minut. W roku szkolnym 2024/2025 w ofercie znajdą Państwo kursy przygotowujące do egzaminów z języka polskiego, matematyki i języka angielskiego, zarówno w formie stacjonarnej (dla uczniów z Tczewa i okolic) oraz w formie zdalnej." },
+    { text: "Wystarczy poniżej wybrać poziom, przedmiot i tryb zajęć, a następnie uzupełnić formularz zgłoszeniowy." }
+];
 
-const mode = [
-    {val: "all", write: "wszystkie tryby zajęć"},
-    {val:"stacjonarne", write: "zajęcia stacjonarne"},
-    {val:"online", write: "zajęcia online"}
-]
+const subjectOptions = [
+    { val: "all", write: "wszystkie przedmioty" },
+    { val: "polski", write: "Język polski" },
+    { val: "angielski", write: "Język angielski" },
+    { val: "matematyka", write: "Matematyka" }
+];
 
+const levelOptions = [
+    { val: "all", write: "wszystkie egzaminy" },
+    { val: "8", write: "egzamin ósmoklasisty" },
+    { val: "m", write: "egzamin maturalny" }
+];
 
-export default function ZapisyGroups(){
+const modeOptions = [
+    { val: "all", write: "wszystkie tryby zajęć" },
+    { val: "stacjonarne", write: "zajęcia stacjonarne" },
+    { val: "online", write: "zajęcia online" }
+];
 
+export default function ZapisyGroups() {
     const [clickedGroup, setClickedGroup] = useState("");
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     const [sortSubject, setSortSubject] = useState("all");
     const [sortLevel, setSortLevel] = useState("all");
     const [sortMode, setSortMode] = useState("all");
-    
 
     useEffect(() => {
         fetch('https://host166766.xce.pl/api/groups.php')
-          .then((res) => res.json())
-          .then((data) => {
-            setData(data.filter(group => group.visibility == "1"));
-            setLoading(false);
-          })
-      }, [])
-     
-      if (isLoading) return <p>Loading...</p>
-      if (!data) return <p>No profile data</p>
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data.filter(group => group.visibility === "1"));
+                setLoading(false);
+            });
+    }, []);
 
+    const filteredData = useMemo(() => {
+        return data
+            .filter(group => sortSubject === "all" || group.subject === sortSubject)
+            .filter(group => sortLevel === "all" || group.level === sortLevel)
+            .filter(group => sortMode === "all" || group.mode === sortMode);
+    }, [data, sortSubject, sortLevel, sortMode]);
 
-      const filteredData = data
-        .filter(group => sortSubject === "all" || group.subject === sortSubject)
-        .filter(group => sortLevel === "all" || group.level === sortLevel)
-        .filter(group => sortMode === "all" || group.mode === sortMode);
-    return(
+    if (isLoading) return <p>Loading...</p>;
+    if (!data.length) return <p>No profile data</p>;
+
+    return (
         <>
-        <Content title="Zajęcia grupowe" desc={description}>
-            <h2 className="text-center">Wybierz grupę do swoich potrzeb</h2>
-            <div className="row">
-                <div className="col-md-4">
-                    <Dropdown options={subject} name="subject" setState={setSortSubject}/>
+            <Content title="Zajęcia grupowe" desc={description}>
+                <h2 className="text-center">Wybierz grupę do swoich potrzeb</h2>
+                <div className="row">
+                    <div className="col-md-4">
+                        <Dropdown options={subjectOptions} name="subject" setState={setSortSubject} />
+                    </div>
+                    <div className="col-md-4">
+                        <Dropdown options={levelOptions} name="level" setState={setSortLevel} />
+                    </div>
+                    <div className="col-md-4">
+                        <Dropdown options={modeOptions} name="mode" setState={setSortMode} />
+                    </div>
                 </div>
-                <div className="col-md-4">
-                    <Dropdown options={level} name="level" setState={setSortLevel}/>
+                <div className="row">
+                    {filteredData.map((group, index) => (
+                        <CardGroups key={index} group={group} setClickedGroup={setClickedGroup} />
+                    ))}
                 </div>
-                <div className="col-md-4">
-                    <Dropdown options={mode} name="mode" setState={setSortMode}/>
+                <div className="whiteCard" style={{ width: "98%" }}>
+                    Zastrzegamy sobie prawo do anulowania kursu w przypadku niewystarczającej liczby chętnych uczestników.<br />Prosimy o dokładne zapoznanie się z regulaminem zajęć grupowych. <a target='_blank' href='/dokumenty/Regulamin-zajec-grupowych.pdf'>Dostępny tutaj.</a>
                 </div>
-            </div>
-            <div className="row">
-                {filteredData.map((group, index) => (
-                    <CardGroups key={index} group={group} setClickedGroup={setClickedGroup} />
-                ))}
-            </div>
-        </Content>
-        <FormGroups clickedGroup={clickedGroup}/>
+            </Content>
+            <FormGroups clickedGroup={clickedGroup} />
         </>
-    )
-
+    );
 }
