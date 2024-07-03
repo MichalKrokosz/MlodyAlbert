@@ -8,10 +8,11 @@ import Dropdown from '../../components/dropdown/dropdown'
 import {BsCircleFill, BsPersonFill, BsPersonArmsUp, BsCheck2Circle, BsDashCircle, BsArrowUpCircle} from 'react-icons/bs'
 
 
-function ConfirmationPanel({ icon: Icon, textBig, textSmall }) {
+function ConfirmationPanel({ icon: Icon, iconColor, textBig, textSmall }) {
+    console.log(iconColor)
     return (
         <div className="confirmation-panel">
-            <Icon style={{ color: Icon === BsCheck2Circle ? "green" : "red" , fontSize: "42px"}} />
+            <Icon style={{ color: iconColor, fontSize: "42px" }} />
             <h3>{textBig}</h3>
             <p>{textSmall}</p>
         </div>
@@ -23,11 +24,11 @@ function ConfirmationPanel({ icon: Icon, textBig, textSmall }) {
 const reducer = (state, action) => {
     switch (action.type) {
         case "SUCCESS":
-            return {icon: BsCheck2Circle, textBig: "Wysłano pomyślnie", textSmall: "Potwierdzenie rezerwacji wysłaliśmy na podany email i będziemy się kontaktować na podany numer telefonu w celu potwierdzenia rezerwacji"}
+            return {icon: BsCheck2Circle, iconColor: "green", textBig: "Wysłano pomyślnie", textSmall: "Potwierdzenie rezerwacji zostało wysłane na podany adres email. Skontaktujemy się z państwem najszybciej jak to możliwe w celu weryfikacji danych."}
         case "FAILURE":
-            return {icon: BsDashCircle, textBig: "Wystąpił błąd", textSmall: "W celu wyjaśnienia sytuacji i zarezerwowania prosimy skontaktować się telefonicznie lub emailem albo spróbować ponownie"}
+            return {icon: BsDashCircle, iconColor: "red", textBig: "Wystąpił błąd", textSmall: "W celu wyjaśnienia sytuacji i zarezerwowania prosimy skontaktować się telefonicznie lub emailem albo spróbować ponownie"}
         case "SENDING":
-            return {icon: BsArrowUpCircle, textBig: "Wysyłanie", textSmall: ""}
+            return {icon: BsArrowUpCircle, iconColor: "rgb(0, 120, 237)", textBig: "Wysyłanie", textSmall: ""}
         default:
             return state;
     }
@@ -40,7 +41,7 @@ export default function FormGroups({clickedGroup}){
     //const [sendSuccess, setSendSuccess] = useState(false);
     //const [isSending, setIsSending] = useState(false); 
     
-    const [sendState, dispatch] = useReducer(reducer, {icon: BsArrowUpCircle, textBig: "Wysyłanie", textSmall: ""});
+    const [sendState, dispatch] = useReducer(reducer, {icon: BsArrowUpCircle, iconColor: "rgb(0, 120, 237)", textBig: "Wysyłanie", textSmall: ""});
 
 
     let actualYear = new Date().getFullYear();
@@ -48,7 +49,7 @@ export default function FormGroups({clickedGroup}){
         {val:"nic", write: "Przez co dowiedziałes sie o Młodym Albercie?"},
         {val:"Jestem stałym klientem", write: "Jestem stałym klientem"},
         {val:"Przez znajomego", write: "Przez znajomego"},
-        {val:"Facebook", write: "Facebook"}
+        {val:"Media społecznościowe", write: "Media społecznościowe"}
     ]
     
     useEffect(() => {
@@ -59,7 +60,8 @@ export default function FormGroups({clickedGroup}){
 
     
 
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const formik = useFormik({
         initialValues: {
             parentFirstName: '',
@@ -106,6 +108,7 @@ export default function FormGroups({clickedGroup}){
             recommendationName: Yup.string()
                 .max(50, 'Maksymalnie 50 znaków'),
             email: Yup.string()
+                .matches(emailRegex, 'Niepoprawny adres email')
                 .required('Wymagane'),
             statute: Yup.bool()
                 .oneOf([true],"Regulamin musi być zaakceptowany"),
@@ -179,7 +182,7 @@ export default function FormGroups({clickedGroup}){
                                                 <BsPersonArmsUp className='bi'/>
                                             </div>
                                         </div>
-                                        <h2 class="text-center">Dane opiekuna</h2>
+                                        <h2 class="text-center">Dane uczestnika</h2>
                                         {/* childFirstName */}
                                         <input id="childFirstName" name="childFirstName" type="text" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.childFirstName} />
                                         <label htmlFor="childFirstName" placeholder="Imię"></label>
@@ -238,7 +241,7 @@ export default function FormGroups({clickedGroup}){
                                         {/* regulamin */}
                                         <input className="form-check-input" type="checkbox" id="statute" name='statute' autocomplete="nope" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.statute}></input>
                                         <label className="form-check-label" htmlFor="check" id="check-label">
-                                        &nbsp;Zapoznałem się z&nbsp;<a href="regulamin.pdf" target="_blank" style={{color : "white"}}>regulaminem</a>
+                                        &nbsp;Zapoznałem się z&nbsp;<a href="/dokumenty/Regulamin-zajec-grupowych.pdf" target="_blank" style={{color : "white"}}>regulaminem</a>
                                         </label>
                                         {formik.touched.statute && formik.errors.statute ? ( <div className='inputError'>{formik.errors.statute}</div> ) : <br/>}
 
@@ -250,7 +253,7 @@ export default function FormGroups({clickedGroup}){
                             
                         </div>
                         <div className="modal-footer">
-                            <button type="submit" className="btn btn-primary" data-bs-target="#modal-confirmation" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(formik.isValid && formik.dirty)}>Save changes</button>
+                            <button type="submit" className="btn btn-primary" data-bs-target="#modal-confirmation" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(formik.isValid && formik.dirty)}>Zapisz się!</button>
                         </div>
                     </form>
                 </div>
@@ -265,7 +268,8 @@ export default function FormGroups({clickedGroup}){
                     </div>
                     <div class="modal-body">
                     <ConfirmationPanel 
-                        icon={sendState.icon} 
+                        icon={sendState.icon}
+                        iconColor={sendState.iconColor} 
                         textBig={sendState.textBig} 
                         textSmall={sendState.textSmall}
                     />

@@ -51,7 +51,7 @@ export default function ZapisyGroups() {
 
     const filteredData = useMemo(() => {
         return data
-            .filter(group => sortSubject === "all" || group.subject === sortSubject)
+            .filter(group => sortSubject === "all" || group.subject === sortSubject || group.subject === "all")
             .filter(group => sortLevel === "all" || group.level === sortLevel)
             .filter(group => sortMode === "all" || group.mode === sortMode);
     }, [data, sortSubject, sortLevel, sortMode]);
