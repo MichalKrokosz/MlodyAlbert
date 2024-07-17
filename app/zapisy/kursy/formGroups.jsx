@@ -102,7 +102,7 @@ export default function FormGroups({clickedGroup}){
                 .max(12, 'Miesiąc musi być prawidłowy')
                 .required('Wymagane'),
             birthYear: Yup.number()
-                .min(Number(actualYear)-30, 'Rok musi być prawidłowy')
+                .min(Number(actualYear)-40, 'Rok musi być prawidłowy')
                 .max(Number(actualYear)-5, 'Rok musi być prawidłowy')
                 .required('Wymagane'),
             recommendationName: Yup.string()
@@ -117,7 +117,7 @@ export default function FormGroups({clickedGroup}){
             values.group = clickedGroup;
             dispatch({ type: "SENDING" })
             //console.log(JSON.stringify(values, null, 2));
-            fetch('https://host166766.xce.pl/email/group.php', {
+            fetch('https://mlodyalbert.pl/email/group.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -145,9 +145,8 @@ export default function FormGroups({clickedGroup}){
                         <h5 className="modal-title">Zapis do: {clickedGroup}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form onSubmit={formik.handleSubmit}>
-                        <div className="modal-body">
-
+                    <div className="modal-body">
+                        <form id='signup-form' onSubmit={formik.handleSubmit}>
                             <div className='row'>
                                 <div className='col-md-6' style={{marginBottom: "1.6em"}}>
                                     <div className='input-container'>
@@ -251,11 +250,11 @@ export default function FormGroups({clickedGroup}){
                             
                             
                             
-                        </div>
+                        </form>
                         <div className="modal-footer">
-                            <button type="submit" className="btn btn-primary" data-bs-target="#modal-confirmation" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(formik.isValid && formik.dirty)}>Zapisz się!</button>
+                            <button type="submit" className="btn btn-primary" form='signup-form' data-bs-target="#modal-confirmation" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(formik.isValid && formik.dirty)}>Zapisz się!</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

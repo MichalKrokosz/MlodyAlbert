@@ -15,7 +15,7 @@ export default function Header(){
             </div>
             <div className="row">
                 <div className="col-6 header-text">
-                    <p>Centrum<br/>Korepetycji</p>
+                    <p>CENTRUM<br/>KOREPETYCJI</p>
                 </div>
                 <div className="col-6" style={{textAlign: "left"}}>
                     <Link href="https://mlodyalbert.pl/">

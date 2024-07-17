@@ -55,8 +55,6 @@ export default function CardKursy({group, setClickedGroup}){
                         <button className="btn btn-primary rezerw-button disable" disabled>Zapisy niedostępne</button>
                     )
                 }
-
-                
             </div>
         </div>
         </>

@@ -1,0 +1,15 @@
+.cennik-img{
+    width: 70%;
+    height: auto;
+    border: 3px solid white;
+    border-radius: 32px;
+    box-shadow: 0 0 8px white;
+}
+
+@media only screen and (max-width: 576px) {
+    
+    .cennik-img{
+        width: 95%;
+    }
+
+}

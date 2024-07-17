@@ -1,0 +1,11 @@
+.discount-card{
+    background-color: white;
+    border-radius: 16px;
+    margin: 24px;
+    color: black;
+    
+}
+
+.discount-card,img{
+    border-radius: 16px;
+}
