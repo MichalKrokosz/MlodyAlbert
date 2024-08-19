@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: {
-    default: "Młody Albert",
-    template: "%s | Młody Albert",
+    default: "Młody Albert | Korepetycje Tczew | Kurs maturalny | Kurs ósmoklasisty",
+    template: "%s | Młody Albert | Korepetycje Tczew | Kurs maturalny | Kurs ósmoklasisty",
   },
   description: "Korepetycje Młody Albert to centrum edukacyjne, w którym oferujemy zajęcia indywidualne i grupowe, pomoc w nauce, przygotowanie do egzaminów kończących szkołę.",
 };

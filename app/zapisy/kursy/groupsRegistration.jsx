@@ -2,8 +2,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import Content from "../../components/content/content"
 import Dropdown from "../../components/dropdown/dropdown"
-import CardGroups from "./cardGroups"
-import FormGroups from "./formGroups"
+import CardGroups from "./groupsCard"
+import FormGroups from "./groupsForm"
 import "./card.css"
 
 const description = [

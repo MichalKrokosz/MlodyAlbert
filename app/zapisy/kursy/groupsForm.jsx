@@ -142,7 +142,7 @@ export default function FormGroups({clickedGroup}){
             <div className="modal-dialog modal-xl modal-fullscreen-sm-down">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Zapis do: {clickedGroup}</h5>
+                        <h5 className="modal-title">Zapis do: <strong>{clickedGroup}</strong></h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">

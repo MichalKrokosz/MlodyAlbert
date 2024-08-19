@@ -1,4 +1,4 @@
-import ZapisyGroups from "./groupsRegistration";
+import ZapisyGroups from "./individualRegistration ";
 
 export const metadata = {
     title: "Zajęcia grupowe",
