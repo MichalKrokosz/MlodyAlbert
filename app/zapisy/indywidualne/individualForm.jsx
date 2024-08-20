@@ -40,7 +40,8 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
     
     
     const [sendState, dispatch] = useReducer(reducer, {icon: BsArrowUpCircle, iconColor: "rgb(0, 120, 237)", textBig: "Wysyłanie", textSmall: ""});
-
+    const [selectedHours, setSelectedHours] = useState([]);
+    const [resetSchedule, setResetSchedule] = useState(false);
 
     let actualYear = new Date().getFullYear();
     const recommendationOptions = [
@@ -55,6 +56,10 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
         ? require("bootstrap/dist/js/bootstrap")
         : null;
     },[]);
+
+    useEffect(() => {
+        setSelectedHours([])
+    },[clickedTutorID, resetSchedule]);
 
     
 
@@ -141,12 +146,12 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
             <div className="modal-dialog modal-xl modal-fullscreen-sm-down">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel"></h5>
+                        <h5 className="modal-title"><button onClick={() => setResetSchedule(!resetSchedule)}>reset</button></h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <div className="wrapper">
-                            <section className="cards">
+                        <div className="wrapper" style={{minHeight: "300px"}}>
+                            <section className="lessons">
                                 <div className="grid-container">
                                     <div className="grid-top">Pn</div>
                                     <div className="grid-top">Wt</div>
@@ -156,12 +161,12 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                                     <div className="grid-top">So</div>
                                     <div className="grid-top">N</div>
 
-                                    <Schedule clickedTutorID={clickedTutorID}/>
+                                    <Schedule clickedTutorID={clickedTutorID} selectedHours={selectedHours} setSelectedHours={setSelectedHours} key={resetSchedule}/>
                                     
                                 </div>
                             </section>
                         </div>
-
+                        <p className='text-end'>Liczba wybranych godzin: {selectedHours.length}</p>
                         <p className="text-right">Wybrane godziny są oznaczone czerwoną obramówką. Maksymalnie można wybrać 3 godziny</p>
                         <h5>Legenda</h5>
                         <div className="row">
