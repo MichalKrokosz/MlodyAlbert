@@ -48,7 +48,7 @@ export default function CardKursy({tutor, setClickedTutorName, setClickedTutorID
 
                 {
                     (tutor.access === "1" ?
-                        <button type='button' className="btn btn-primary rezerw-button" data-bs-toggle='modal' data-bs-target='#modal-schedule' onClick={() => {setClickedTutorName(tutor.name); setClickedTutorID(0); setClickedTutorID(tutor.id)}} >Zarezerwuj teraz!</button>:
+                        <button type='button' className="btn btn-primary rezerw-button" data-bs-toggle='modal' data-bs-target='#modal-schedule' onClick={() => {setClickedTutorName(tutor.name); setClickedTutorID(tutor.id)}} >Zarezerwuj teraz!</button>:
                         <button className="btn btn-primary rezerw-button disable" disabled>Zapisy niedostępne</button>
                     )
                 }

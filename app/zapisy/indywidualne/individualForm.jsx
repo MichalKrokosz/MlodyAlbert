@@ -6,7 +6,7 @@ import { useEffect, useState, useReducer} from 'react';
 import "../../components/moreCss/form.css"
 import Dropdown from '../../components/dropdown/dropdown'
 import Schedule from "./schedule"
-import {BsCircleFill, BsPersonFill, BsPersonArmsUp, BsCheck2Circle, BsDashCircle, BsArrowUpCircle} from 'react-icons/bs'
+import {BsCircleFill, BsPersonFill, BsPersonArmsUp, BsCheck2Circle, BsDashCircle, BsArrowUpCircle, BsArrowClockwise} from 'react-icons/bs'
 
 
 function ConfirmationPanel({ icon: Icon, iconColor, textBig, textSmall }) {
@@ -146,7 +146,7 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
             <div className="modal-dialog modal-xl modal-fullscreen-sm-down">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title"><button onClick={() => setResetSchedule(!resetSchedule)}>reset</button></h5>
+                        <h5 className="modal-title">Plan: <strong>{clickedTutorName}</strong></h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
@@ -166,20 +166,24 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                                 </div>
                             </section>
                         </div>
-                        <p className='text-end'>Liczba wybranych godzin: {selectedHours.length}</p>
-                        <p className="text-right">Wybrane godziny są oznaczone czerwoną obramówką. Maksymalnie można wybrać 3 godziny</p>
+
+                        <a onClick={() => setResetSchedule(!resetSchedule)} style={{color: "blue", cursor: "pointer"}}><BsArrowClockwise/> Odśwież plan</a>
+                        <p>Liczba wybranych godzin: {selectedHours.length} <br/> Wybrane godziny są oznaczone czerwoną obramówką. Maksymalnie można wybrać 3 godziny</p>
                         <h5>Legenda</h5>
                         <div className="row">
                             <div className="col-4">
                                 <div className="stationary legend time-button">Zajęcia dostępne</div>
                             </div>
                             <div className="col-4">
-                                <div className="reserved legend time-button">Zajęcia wstępnie zarezerwowane</div>
+                                <div className="reserved legend time-button" style={{color: "white"}}>Zajęcia zarezerwowane</div>
                             </div>
                             <div className="col-4">
-                                <div className="unavailable legend time-button">Zajęcia zajęte</div>
+                                <div className="unavailable legend time-button" style={{color: "white"}}>Zajęcia zajęte</div>
                             </div>
                         </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="submit" className="btn btn-primary" data-bs-target="#modal-form" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(selectedHours.length > 0)}>Dalej</button>
                     </div>
                 </div>
             </div>
@@ -297,9 +301,10 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                             </div>
                             
                         </form>
-                        <div className="modal-footer">
-                            <button type="submit" className="btn btn-primary" form='signup-form' data-bs-target="#modal-confirmation" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(formik.isValid && formik.dirty)}>Zapisz się!</button>
-                        </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#modal-schedule" data-bs-toggle="modal">Cofnij</button>
+                        <button type="submit" className="btn btn-primary" form='signup-form' data-bs-target="#modal-confirmation" data-bs-toggle="modal" data-bs-dismiss="modal" disabled={!(formik.isValid && formik.dirty)}>Zapisz się!</button>
                     </div>
                 </div>
             </div>
