@@ -32,8 +32,8 @@ export default function Home(){
             <h2 className="title">Nasze oferty</h2>
             <div className="row">
                 <div className="col-lg-4 mb-3">
-                    <div className="ma-offer disabled image-container">
-                        <Link href={"#"}>
+                    <div className="ma-offer image-container">
+                        <Link href={"/zapisy/indywidualne"}>
                             <Image src="/images/home/zaj-indywidualne.png" width={300} height={500} class="d-block w-100" style={{height: "auto"}} alt="..."/>
                         </Link>
                     </div>

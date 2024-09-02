@@ -1,7 +1,7 @@
 /* TUTOR CARDS*/
 
 .inputError{
-    color: rgb(255, 142, 142);
+    color: rgb(255, 127, 127);
 }
 
 .tutorcard{
@@ -116,28 +116,28 @@
     font-size: 18px;
     font-weight: bold;
     text-align: center;
-
+    background-color: #81cfff;
 }
 
 
-.grid-container:nth-child(14n+1),
-.grid-container:nth-child(14n+2),
-.grid-container:nth-child(14n+3),
-.grid-container:nth-child(14n+4),
-.grid-container:nth-child(14n+5),
-.grid-container:nth-child(14n+6),
-.grid-container:nth-child(14n+7) {
+.grid-item:nth-child(14n+1),
+.grid-item:nth-child(14n+2),
+.grid-item:nth-child(14n+3),
+.grid-item:nth-child(14n+4),
+.grid-item:nth-child(14n+5),
+.grid-item:nth-child(14n+6),
+.grid-item:nth-child(14n+7) {
     background-color: #81cfff;
   }
   
-.grid-container:nth-child(14n+8),
-.grid-container:nth-child(14n+9),
-.grid-container:nth-child(14n+10),
-.grid-container:nth-child(14n+11),
-.grid-container:nth-child(14n+12),
-.grid-container:nth-child(14n+13),
-.grid-container:nth-child(14n+14) {
-    background-color: #cbe9ff;
+.grid-item:nth-child(14n+8),
+.grid-item:nth-child(14n+9),
+.grid-item:nth-child(14n+10),
+.grid-item:nth-child(14n+11),
+.grid-item:nth-child(14n+12),
+.grid-item:nth-child(14n+13),
+.grid-item:nth-child(14n+14) {
+    background-color: #a0dbff;
   }
 
 .time-button{
@@ -195,6 +195,7 @@
     margin-bottom: 8px;
     pointer-events: none;
     font-size: 1em;
+    border-radius: 6px;
 }
 
 
@@ -219,3 +220,15 @@
         padding: 4px;
     }
 }
+
+@media only screen and (max-width: 767px) {
+    .card-name{
+        padding-top: 12px;
+    }
+
+    .rezerw-img{
+        margin-left: 12px;
+    }
+    
+}
+

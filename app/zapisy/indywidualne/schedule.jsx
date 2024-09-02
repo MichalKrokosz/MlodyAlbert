@@ -18,7 +18,7 @@ export default function Schedule({ clickedTutorID, selectedHours, setSelectedHou
   };
 
   useEffect(() => {
-    fetch('https://mlodyalbert.pl/api/lessons.php?id=' + clickedTutorID)
+    fetch('https://mlodyalbert.pl/api/individual/lessons.php?id=' + clickedTutorID)
       .then((res) => res.json())
       .then((data) => {
         setData(data)

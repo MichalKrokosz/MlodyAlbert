@@ -36,12 +36,12 @@ const reducer = (state, action) => {
   };
 
 
-export default function FormTutor({clickedTutorName, clickedTutorID}){
+export default function FormTutor({clickedTutorName, clickedTutorID, resetSchedule, setResetSchedule}){
     
     
     const [sendState, dispatch] = useReducer(reducer, {icon: BsArrowUpCircle, iconColor: "rgb(0, 120, 237)", textBig: "Wysyłanie", textSmall: ""});
     const [selectedHours, setSelectedHours] = useState([]);
-    const [resetSchedule, setResetSchedule] = useState(false);
+
 
     let actualYear = new Date().getFullYear();
     const recommendationOptions = [
@@ -78,6 +78,7 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
             email: '',
             recommendation: '',
             recommendationName: '',
+            discount: '',
             statute: false,
         },
         validationSchema: Yup.object({
@@ -88,7 +89,7 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                 .max(25, 'Maksymalnie 25 znaków')
                 .required('Wymagane'),
             tel: Yup.string()
-                .matches(phoneRegExp, 'Niepoprawny numer telefonu')
+                .matches(phoneRegExp, 'Number powinien zawierać tylko cyfry')
                 .required('Wymagane'),
             childFirstName: Yup.string()
                 .max(15, 'Maksymalnie 15 znaków')
@@ -113,14 +114,17 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
             email: Yup.string()
                 .matches(emailRegex, 'Niepoprawny adres email')
                 .required('Wymagane'),
+            discount: Yup.string()
+                .max(30, 'Maksymalnie 30 znaków'),
             statute: Yup.bool()
                 .oneOf([true],"Regulamin musi być zaakceptowany"),
         }),
         onSubmit: values => {
-            values.group = clickedGroup;
+            values.tutor = clickedTutorID;
+            values.hours = selectedHours;
             dispatch({ type: "SENDING" })
             //console.log(JSON.stringify(values, null, 2));
-            fetch('https://mlodyalbert.pl/email/group.php', {
+            fetch('https://mlodyalbert.pl/api/individual/addNewStudent.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -175,10 +179,10 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                                 <div className="stationary legend time-button">Zajęcia dostępne</div>
                             </div>
                             <div className="col-4">
-                                <div className="reserved legend time-button" style={{color: "white"}}>Zajęcia zarezerwowane</div>
+                                <div className="reserved legend time-button" style={{color: "white"}}>Zajęcia zajęte</div>
                             </div>
                             <div className="col-4">
-                                <div className="unavailable legend time-button" style={{color: "white"}}>Zajęcia zajęte</div>
+                                <div className="unavailable legend time-button" style={{color: "white"}}>Zajęcia niedostępne</div>
                             </div>
                         </div>
                     </div>
@@ -200,7 +204,7 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                     <div className="modal-body">
                         <form id='signup-form' onSubmit={formik.handleSubmit}>
                             <div className='row'>
-                                <div className='col-md-6' style={{marginBottom: "1.6em"}}>
+                                <div className='col-lg-6' style={{marginBottom: "1.6em"}}>
                                     <div className='input-container'>
                                         <div class="icon-container">
                                             <div class="icon-overlay">
@@ -225,7 +229,7 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                                         {formik.touched.tel && formik.errors.tel ? ( <div className='inputError'>{formik.errors.tel}</div> ) : <br/>}
                                     </div>
                                 </div>
-                                <div className='col-md-6' style={{marginBottom: "1.6em"}}>
+                                <div className='col-lg-6' style={{marginBottom: "1.6em"}}>
                                     <div className='input-container'>
                                         <div class="icon-container">
                                             <div class="icon-overlay">
@@ -280,8 +284,6 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                                             {recommendationOptions.map((item, i) => <option key={i} value={item.val}>{item.write}</option>)}
                                         </select>
                                         
-
-
                                         {/* polecajka nazwa */}
                                         <div style={(formik.values.recommendation === "Przez znajomego") ? {} : {display: "none"}}>
                                             <input id="recommendationName" name="recommendationName" type="text" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.recommendationName} />
@@ -289,10 +291,15 @@ export default function FormTutor({clickedTutorName, clickedTutorID}){
                                             {formik.touched.recommendationName && formik.errors.recommendationName ? ( <div className='inputError'>{formik.errors.recommendationName}</div> ) : <br/>}
                                         </div>
 
+                                        {/* kod rabatowy */}
+                                        <input id="discount" name="discount" type="text" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.discount} />
+                                        <label htmlFor="discount" placeholder="Kod rabatowy"></label>
+                                        {formik.touched.discount && formik.errors.discount ? ( <div className='inputError'>{formik.errors.discount}</div> ) : <br/>}
+
                                         {/* regulamin */}
                                         <input className="form-check-input" type="checkbox" id="statute" name='statute' autocomplete="nope" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.statute}></input>
                                         <label className="form-check-label" htmlFor="check" id="check-label">
-                                        &nbsp;Zapoznałem się z&nbsp;<a href="/dokumenty/Regulamin-zajec-grupowych.pdf" target="_blank" style={{color : "white"}}>regulaminem</a>
+                                        &nbsp;Zapoznałem się z&nbsp;<a href="/dokumenty/Regulamin-zajec-indywidualnych.pdf" target="_blank" style={{color : "white"}}>regulaminem</a>
                                         </label>
                                         {formik.touched.statute && formik.errors.statute ? ( <div className='inputError'>{formik.errors.statute}</div> ) : <br/>}
 

@@ -41,7 +41,7 @@ export default function ZapisyGroups() {
     const [sortMode, setSortMode] = useState("all");
 
     useEffect(() => {
-        fetch('https://mlodyalbert.pl/api/groups.php')
+        fetch('https://mlodyalbert.pl/api/groups/groups.php')
             .then((res) => res.json())
             .then((data) => {
                 setData(data.filter(group => group.visibility === "1"));

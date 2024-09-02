@@ -3,7 +3,7 @@ import ReadMore from "../../components/readMore/readMore"
 import "./card.css"
 
 
-export default function CardKursy({tutor, setClickedTutorName, setClickedTutorID}){
+export default function CardKursy({tutor, setClickedTutorName, setClickedTutorID, resetSchedule, setResetSchedule}){
     
     var writeSubject = "";
     switch (tutor.subject) {
@@ -16,20 +16,7 @@ export default function CardKursy({tutor, setClickedTutorName, setClickedTutorID
         default:
             writeSubject = tutor.subject.charAt(0).toUpperCase() + tutor.subject.slice(1);
     }
-
-    var writeLevel = "";
-    switch (tutor.level) {
-        case '8':
-            writeLevel = "egz. 8klasisty";
-            break;
-        case 'm':
-            writeLevel = "egz. maturalny";
-            break;
-        default:
-            writeLevel = tutor.subject.charAt(0).toUpperCase() + tutor.subject.slice(1);
-    }
-
-    
+  
 
     
     return(
@@ -38,17 +25,17 @@ export default function CardKursy({tutor, setClickedTutorName, setClickedTutorID
             <div className='card'>
                 <div className='row'>
                     <div className='col-md-auto'>
-                        <a target='_blank' href={`/images/individual/tutor${tutor.id}.jpg`}><Image src={`/images/individual/tutor${tutor.id}.jpg`} width="250" height="250" className='rezerw-img'/></a>
+                        <a target='_blank' href={`/images/individual/full/tutor${tutor.id}.jpg`}><Image src={`/images/individual/min/tutor${tutor.id}.jpg`} width="600" height="800" className='rezerw-img'/></a>
                     </div>
                     <div className='col-md'>
                         <p className='card-name'>{tutor.name} <span className={`badge badge-${tutor.subject}`}>{writeSubject}</span></p>
-                        <ReadMore text={tutor.description}/>
+                        <p style={{paddingBottom: "16px"}}>{tutor.description}</p>
                     </div>
                 </div>
 
                 {
                     (tutor.access === "1" ?
-                        <button type='button' className="btn btn-primary rezerw-button" data-bs-toggle='modal' data-bs-target='#modal-schedule' onClick={() => {setClickedTutorName(tutor.name); setClickedTutorID(tutor.id)}} >Zarezerwuj teraz!</button>:
+                        <button type='button' className="btn btn-primary rezerw-button" data-bs-toggle='modal' data-bs-target='#modal-schedule' onClick={() => {setClickedTutorName(tutor.name); setClickedTutorID(tutor.id); setResetSchedule(!resetSchedule)}} >Zarezerwuj teraz!</button>:
                         <button className="btn btn-primary rezerw-button disable" disabled>Zapisy niedostępne</button>
                     )
                 }

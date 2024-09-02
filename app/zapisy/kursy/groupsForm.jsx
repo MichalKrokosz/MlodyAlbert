@@ -117,7 +117,7 @@ export default function FormGroups({clickedGroup}){
             values.group = clickedGroup;
             dispatch({ type: "SENDING" })
             //console.log(JSON.stringify(values, null, 2));
-            fetch('https://mlodyalbert.pl/email/group.php', {
+            fetch('https://mlodyalbert.pl/api/groups/email.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

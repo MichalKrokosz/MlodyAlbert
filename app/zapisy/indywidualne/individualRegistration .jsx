@@ -7,16 +7,17 @@ import FormIndividual from "./individualForm"
 import "./card.css"
 
 const description = [
-    { text: "Mamy ogromną przyjemność przedstawić Państwu ofertę kursów przygotowujących do egzaminu ósmoklasisty i egzaminu maturalnego." },
-    { text: "Wszystkie kursy obejmują 30 spotkań po 90 minut. W roku szkolnym 2024/2025 w ofercie znajdą Państwo kursy przygotowujące do egzaminów z języka polskiego, matematyki i języka angielskiego, zarówno w formie stacjonarnej (dla uczniów z Tczewa i okolic) oraz w formie zdalnej." },
-    { text: "Wystarczy poniżej wybrać poziom, przedmiot i tryb zajęć, a następnie uzupełnić formularz zgłoszeniowy." }
+    { text: "Z ogromną przyjemnością przedstawiamy Państwu zespół korepetytorów, którzy w roku szkolnym 2024/2025 prowadzą zajęcia indywidualne z języka polskiego, matematyki, języka angielskiego i chemii." },
+    { text: "Aby zapisać się na zajęcia, wystarczy poniżej wybrać poziom i przedmiot, żeby znaleźć odpowiedniego korepetytora, a następnie uzupełnić formularz zgłoszeniowy." },
+    { text: "Zapisy na zajęcia indywidualne rozpoczną się w poniedziałek 2 września. Zajęcia, według planu rezerwacji, rozpoczynamy w poniedziałek 9 września. Do zobaczenia! " }
 ];
 
 const subjectOptions = [
     { val: "all", write: "wszystkie przedmioty" },
     { val: "polski", write: "Język polski" },
     { val: "angielski", write: "Język angielski" },
-    { val: "matematyka", write: "Matematyka" }
+    { val: "matematyka", write: "Matematyka" },
+    { val: "chemia", write: "Chemia" }
 ];
 
 const levelOptions = [
@@ -26,24 +27,19 @@ const levelOptions = [
     { val: "advanced", write: "ponadpodstawowa p. rozszerzony" }
 ];
 
-const modeOptions = [
-    { val: "all", write: "wszystkie tryby zajęć" },
-    { val: "stacjonarne", write: "zajęcia stacjonarne" },
-    { val: "online", write: "zajęcia online" }
-];
 
 export default function ZapisyTutor() {
     const [clickedTutorName, setClickedTutorName] = useState("");
     const [clickedTutorID, setClickedTutorID] = useState(0);
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [resetSchedule, setResetSchedule] = useState(false);
 
     const [sortSubject, setSortSubject] = useState("all");
     const [sortLevel, setSortLevel] = useState("all");
-    const [sortMode, setSortMode] = useState("all");
 
     useEffect(() => {
-        fetch('https://mlodyalbert.pl/api/tutors.php')
+        fetch('https://mlodyalbert.pl/api/individual/tutors.php')
             .then((res) => res.json())
             .then((data) => {
                 setData(data.filter(tutor => tutor.visibility === "1"));
@@ -55,15 +51,15 @@ export default function ZapisyTutor() {
         return data
             .filter(tutor => sortSubject === "all" || tutor.subject === sortSubject || tutor.subject === "all")
             .filter(tutor => sortLevel === "all" || (sortLevel === "grade" && tutor.grade === "1") || (sortLevel === "basic" && tutor.basic === "1") || (sortLevel === "advanced" && tutor.advanced === "1"))
-    }, [data, sortSubject, sortLevel, sortMode]);
+    }, [data, sortSubject, sortLevel]);
 
     if (isLoading) return <p>Loading...</p>;
     if (!data.length) return <p>No profile data</p>;
 
     return (
         <>
-            <Content title="Zajęcia grupowe" desc={description}>
-                <h2 className="text-center">Wybierz grupę do swoich potrzeb</h2>
+            <Content title="Zajęcia indywidualne" desc={description}>
+                <h2 className="text-center">Wybierz korepetytora do swoich potrzeb</h2>
                 <div className="row">
                     <div className="col-md-6">
                         <Dropdown options={subjectOptions} name="subject" setState={setSortSubject} />
@@ -74,14 +70,11 @@ export default function ZapisyTutor() {
                 </div>
                 <div className="row">
                     {filteredData.map((tutor, index) => (
-                        <CardIndividual key={index} tutor={tutor} setClickedTutorName={setClickedTutorName} setClickedTutorID={setClickedTutorID}/>
+                        <CardIndividual key={index} tutor={tutor} setClickedTutorName={setClickedTutorName} setClickedTutorID={setClickedTutorID} setResetSchedule={setResetSchedule} resetSchedule={resetSchedule}/>
                     ))}
                 </div>
-                <div className="whiteCard" style={{ width: "98%" }}>
-                    Zastrzegamy sobie prawo do anulowania kursu w przypadku niewystarczającej liczby chętnych uczestników.<br />Prosimy o dokładne zapoznanie się z regulaminem zajęć grupowych. <a target='_blank' href='/dokumenty/Regulamin-zajec-grupowych.pdf'>Dostępny tutaj.</a>
-                </div>
             </Content>
-            <FormIndividual clickedTutorName={clickedTutorName} clickedTutorID={clickedTutorID}/>
+            <FormIndividual clickedTutorName={clickedTutorName} clickedTutorID={clickedTutorID} resetSchedule={resetSchedule} setResetSchedule={setResetSchedule}/>
         </>
     );
 }

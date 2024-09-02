@@ -1,10 +1,10 @@
 import ZapisyGroups from "./individualRegistration ";
 
 export const metadata = {
-    title: "Zajęcia grupowe",
+    title: "Zajęcia indywidualne",
 };
 
-export default function ZapisyGrupy(){
+export default function ZapisyIndywidualne(){
     return(
         <>
         <ZapisyGroups/>
