@@ -8,9 +8,9 @@ export default function Zapisy(){
             <h1 className="cosik">Która oferta cię interesuje?</h1>
             <div className="row">
                 <div className="col-sm-4" style={{paddingBottom: "24px"}}>
-                    <Link className="chooseCard" href={"/zapisy/indywidualne"}>
-                        <BulbsButton title={"Zajęcia indywidualne"}/>
-                    </Link>
+                    <div className="chooseCard disabled">
+                        <BulbsButton title={"Zajęcia indywidualne"} text={"Niedostępne"}/>
+                    </div>
                 </div>
                 <div className="col-sm-4" style={{paddingBottom: "24px"}}>
                     <Link className="chooseCard" href={"/zapisy/kursy"}>

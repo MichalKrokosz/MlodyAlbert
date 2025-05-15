@@ -14,6 +14,8 @@ export const metadata = {
   description: "Korepetycje Młody Albert to centrum edukacyjne, w którym oferujemy zajęcia indywidualne i grupowe, pomoc w nauce, przygotowanie do egzaminów kończących szkołę.",
 };
 
+
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
